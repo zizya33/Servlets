@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- definition of types -->
+<xs:simpleType name="soilType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="podzolic"/>
+    <xs:enumeration value="dirt"/>
+    <xs:enumeration value="sod-podzolic"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="color">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="white"/>
+    <xs:enumeration value="green"/>
+    <xs:enumeration value="yellow"/>
+    <xs:enumeration value="red"/>
+    <xs:enumeration value="orange"/>
+    <xs:enumeration value="light green"/>
+    <xs:enumeration value="dark green"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="yesNo">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="yes"/>
+    <xs:enumeration value="no"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="multiplying">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="leaves"/>
+    <xs:enumeration value="cuttings"/>
+    <xs:enumeration value="seeds"/>
+</xs:restriction>
+</xs:simpleType>
+
+<!-- definition of simple elements -->
+<xs:element name="Name">
+<xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+<xs:element name="Note" type="xs:string"/>
+<xs:element name="Soil" type="soilType"/>
+<xs:element name="Origin">
+<xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+<xs:element name="ColorOfStem" type="color"/>
+<xs:element name="ColorOfLeaf" type="color"/>
+<xs:element name="TemperatureValue" type="xs:short"/>
+<xs:element name="Lighting" type="yesNo"/>
+<xs:element name="Watering" type="xs:unsignedShort"/>
+<xs:element name="Multiplying" type="multiplying"/>
+<xs:element name="Value" type="xs:decimal"/>
+<xs:element name="Type" type="xs:string"/>
+
+<!-- definition of attributes -->
+<xs:attribute name="ID" type="xs:ID"/>
+
+<!-- definition of complex elements -->
+<xs:element name="AverageSize">
+<xs:complexType>
+    <xs:sequence>
+      <xs:element ref="Value"/>
+      <xs:element ref="Type"/>     
+     </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="Temperature">
+<xs:complexType>
+    <xs:sequence>
+      <xs:element ref="TemperatureValue"/>
+      <xs:element ref="Type"/>     
+     </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="VisualParameters">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="ColorOfStem"/>
+      <xs:element ref="ColorOfLeaf"/>   
+      <xs:element ref="AverageSize"/>  
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="GrowingTips">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="Temperature"/>
+      <xs:element ref="Lighting"/>   
+      <xs:element ref="Watering"/>  
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="Item">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="Name"/>
+      <xs:element ref="Note" minOccurs="0"/>
+      <xs:element ref="Soil"/>	
+      <xs:element ref="VisualParameters"/>
+      <xs:element ref="GrowingTips"/>
+      <xs:element ref="Multiplying"/>
+    </xs:sequence>
+   <xs:attribute ref="ID"/>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="Flowers">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="Item" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>
